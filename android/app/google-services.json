@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "840539627820",
+    "project_id": "digitalization-logbook",
+    "storage_bucket": "digitalization-logbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840539627820:android:86a84b6437b556c21ecc89",
+        "android_client_info": {
+          "package_name": "com.fadillavicky.logbook_digitalization"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840539627820-t3akmdcm4c9rvjuepjjmlnh1c67l70fg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fadillavicky.logbook_digitalization",
+            "certificate_hash": "7c0ed750e5b3554877f85896e85109052d8b1567"
+          }
+        },
+        {
+          "client_id": "840539627820-omvccegher1vs8hg8a9j1dci9sjifc78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDOryafjd7hw3gDx9QhTg2gjNnsK2qsfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840539627820-omvccegher1vs8hg8a9j1dci9sjifc78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
