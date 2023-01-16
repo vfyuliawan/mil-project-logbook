@@ -12,9 +12,20 @@ class DashboardView extends StatefulWidget {
 class _DashboardViewState extends State<DashboardView> {
   String _scanBarcode = "";
 
+  final TextEditingController idALatController = TextEditingController();
   final TextEditingController suhuController = TextEditingController();
   final TextEditingController catatanController = TextEditingController();
   final TextEditingController barcodeController = TextEditingController();
+
+  void reset() {
+    setState(
+      () {
+        _scanBarcode = "";
+      },
+    );
+    catatanController.clear();
+    suhuController.clear();
+  }
 
   @override
   void initState() {
@@ -55,42 +66,56 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<UserBloc, UserState>(
-          builder: (context, state) {
-            if (state is UserIsLoading) {
-              return const CircularProgressIndicator().centered();
-            } else if (state is UserIsSuccess) {
-              return ZStack(
-                [
-                  Container(
-                    // width: ,
-                    height: MediaQuery.of(context).size.height * 0.20,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(blurRadius: 5, offset: Offset(-1, 3))
-                      ],
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(60),
+      body: BlocConsumer<TempRecordBloc, TempRecordState>(
+        listener: (context, tempState) {
+          if (tempState is TempRecordIsFailed) {
+            Commons().showSnackbarError(context, tempState.message);
+          } else if (tempState is TempRecordIsSuccess) {
+            Commons().showSnackbarInfo(context, "Data Suhu Berhasil Di Input");
+            reset();
+          }
+        },
+        builder: (context, tempState) {
+          if (tempState is TempRecordIsLoading) {
+            return CircularProgressIndicator().centered();
+          }
+          return SafeArea(
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserIsLoading) {
+                  return const CircularProgressIndicator().centered();
+                } else if (state is UserIsSuccess) {
+                  return ZStack(
+                    [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.20,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(blurRadius: 5, offset: Offset(-1, 3))
+                          ],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(60),
+                          ),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/background-home.jpg'),
+                              fit: BoxFit.cover),
+                        ),
                       ),
-                      image: DecorationImage(
-                          image:
-                              AssetImage('assets/images/background-home.jpg'),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                  _buildAppBar(context, state.data).pOnly(left: 10),
-                  24.heightBox,
-                  _buildContent(context).pOnly(top: 190, left: 5, right: 5)
-                  // _buildListProduct().expand(),
-                ],
-                // alignment: MainAxisAlignment.start,
-                // axisSize: MainAxisSize.max,
-              );
-            }
-            return 0.heightBox;
-          },
-        ),
+                      _buildAppBar(context, state.data).pOnly(left: 10),
+                      24.heightBox,
+                      _buildContent(context).pOnly(top: 190, left: 5, right: 5)
+                      // _buildListProduct().expand(),
+                    ],
+                    // alignment: MainAxisAlignment.start,
+                    // axisSize: MainAxisSize.max,
+                  );
+                }
+                return 0.heightBox;
+              },
+            ),
+          );
+        },
       ),
     );
   }
@@ -121,6 +146,7 @@ class _DashboardViewState extends State<DashboardView> {
             elevation: 9,
             // color: Colors.red.shade100,
             child: ExpansionTile(
+              initiallyExpanded: true,
               collapsedBackgroundColor: Colors.red.shade600,
               iconColor: Colors.black,
               // backgroundColor: Colors.grey,
@@ -136,14 +162,18 @@ class _DashboardViewState extends State<DashboardView> {
                   },
                   border: TableBorder.all(),
                   children: [
-                    _buildRow([
-                      'A (Attributable)',
-                      'Terdapat informasi SIAPA dan KAPAN aktivitas dilakukan, dengan mencantumkan PARAF, NAMA/INISIAL dan TANGGAL. Untuk perbaikan/koreksi data gunakan GARIS TUNGGAL dan pastikan terdapat ALASAN yang jelas dan cantumkan PARAF, NAMA/INISIAL dan TANGGAL.'
-                    ],),
-                    _buildRow([
-                      '(L) Legible',
-                      'Pengisian menggunakan ballpoint dengan TINTA PERMANEN BERWARNA BIRU dan tidak dapat dihapus. Dilarang menghilangkan/mengaburkan, menghapus, mencoret-coret dan menimpa pada data yang salah. Tulisan tangan harus JELAS dan MUDAH DIBACA.'
-                    ],),
+                    _buildRow(
+                      [
+                        'A (Attributable)',
+                        'Terdapat informasi SIAPA dan KAPAN aktivitas dilakukan, dengan mencantumkan PARAF, NAMA/INISIAL dan TANGGAL. Untuk perbaikan/koreksi data gunakan GARIS TUNGGAL dan pastikan terdapat ALASAN yang jelas dan cantumkan PARAF, NAMA/INISIAL dan TANGGAL.'
+                      ],
+                    ),
+                    _buildRow(
+                      [
+                        '(L) Legible',
+                        'Pengisian menggunakan ballpoint dengan TINTA PERMANEN BERWARNA BIRU dan tidak dapat dihapus. Dilarang menghilangkan/mengaburkan, menghapus, mencoret-coret dan menimpa pada data yang salah. Tulisan tangan harus JELAS dan MUDAH DIBACA.'
+                      ],
+                    ),
                     _buildRow([
                       '(C) Contemporaneous',
                       'Dilarang mencatat pada dokumen yang tidak terdaftar (kertas satuan, catatan pribadi atau post it).Gunakan DOKUMEN YANG TERDAFTAR dan telah DISETUJUI OLEH QA. Pada setiap halaman tersedia cap VERIFIED BY QA. Dokumen yang telah habis masa pemakaiannya atau telah terisi penuh harus diperiksa oleh kepala department dan QA, kemudian di cap CHECKED BY QA sedangkan yang sudah tidak digunakan dikarenakan alat / mesin rusak di cap OBSOLETE oleh QA'
@@ -180,9 +210,14 @@ class _DashboardViewState extends State<DashboardView> {
                     16.heightBox,
                     _buildSuhuForm(),
                     ButtonWidget(
-                      onPressed: () async {
-                        // text = await scanner.scan();
-                        setState(() {});
+                      onPressed: () {
+                        BlocProvider.of<TempRecordBloc>(context).add(
+                          AddTempProduct(
+                            idNumber: _scanBarcode,
+                            note: catatanController.text,
+                            temp: double.parse(suhuController.text),
+                          ),
+                        );
                       },
                       isLoading: false,
                       text: 'Submit',
@@ -191,7 +226,10 @@ class _DashboardViewState extends State<DashboardView> {
                 )
               ],
             ),
-          )
+          ),
+          Divider(
+            color: Colors.black,
+          ),
         ]);
   }
 
@@ -238,46 +276,15 @@ class _DashboardViewState extends State<DashboardView> {
                   data.username!.textSpan.size(14).bold.make(),
                 ]).make(),
               ]).expand(),
-
-              // //ICON Cart
-              // BlocBuilder<CartCountCubit, CartCountState>(
-              //   builder: (context, state) {
-              //     return ZStack(
-              //       [
-              //         IconButton(
-              //           onPressed: () {
-              //             context.go(routeName.cartPath);
-              //           },
-              //           icon: const Icon(
-              //             Icons.shopping_cart_outlined,
-              //             color: colorName.black,
-              //           ),
-              //         ),
-              //         (state as CartCountIsSuccess).value != 0
-              //             ? VxBox(
-              //                     child: state.value.text
-              //                         .size(8)
-              //                         .white
-              //                         .makeCentered()
-              //                         .p4())
-              //                 .roundedFull
-              //                 .color(colorName.accentRed)
-              //                 .make()
-              //                 .positioned(right: 8, top: 2)
-              //             : 0.heightBox
-              //       ],
-              //       alignment: Alignment.topRight,
-              //     );
-              //   },
-              // )
-              // //ICON CART
             ],
-            // alignment: MainAxisAlignment.spaceBetween,
-            // axisSize: MainAxisSize.max,
           ),
         ],
       ),
     ).make();
+  }
+
+  Widget _buildVisitorForm() {
+    return 0.heightBox;
   }
 
   Widget _buildSuhuForm() {
@@ -291,7 +298,7 @@ class _DashboardViewState extends State<DashboardView> {
               readOnly: true,
               controller: barcodeController,
               decoration: InputDecoration(
-                labelText: "Nomor Alat",
+                labelText: (_scanBarcode.isEmpty ? "Nomor Alat" : _scanBarcode),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black, width: 1),
                 ),

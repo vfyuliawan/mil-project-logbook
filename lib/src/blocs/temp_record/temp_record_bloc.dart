@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:logbook_digitalization/src/utilities/utilities.dart';
 import 'package:meta/meta.dart';
 
 import '../../models/models.dart';
@@ -12,7 +13,9 @@ class TempRecordBloc extends Bloc<AddTempProduct, TempRecordState> {
     on<AddTempProduct>((event, emit) async {
       emit(TempRecordIsLoading());
       TempRecordingModel data = TempRecordingModel(
+        status: "Waiting Approval",
         id: DateTime.now().millisecondsSinceEpoch.toString(),
+        uid: await Commons().getUID(),
         dateTime: DateTime.now(),
         temp: event.temp,
         idNumber: event.idNumber,
@@ -22,9 +25,13 @@ class TempRecordBloc extends Bloc<AddTempProduct, TempRecordState> {
       final result = await TempRecordService().addNewTempRecord(data);
 
       result.fold(
-          (l) => emit(TempRecordIsFailed(message: l)),
-          (r) => emit(TempRecordIsSuccess(
-              message: r))); // TODO: implement event handler
+        (l) => emit(
+          TempRecordIsFailed(message: l),
+        ),
+        (r) => emit(
+          TempRecordIsSuccess(message: r),
+        ),
+      ); // TODO: implement event handler
     });
   }
 }

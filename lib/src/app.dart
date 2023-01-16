@@ -28,6 +28,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => AddToCartBloc()),
         BlocProvider(create: (context) => OrderBloc()),
         BlocProvider(create: (context) => ListOrderBloc()),
+        BlocProvider(create: (context) => TempRecordBloc()),
         BlocProvider(
             create: (context) =>
                 WishlistCubit(BlocProvider.of<CheckSavedCubit>(context))),

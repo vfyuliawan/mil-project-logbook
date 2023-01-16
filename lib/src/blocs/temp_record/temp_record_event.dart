@@ -8,11 +8,13 @@ class AddTempProduct extends TempRecordEvent {
   final String? note;
   final String? uid;
   final double? temp;
+  final String? status;
 
   AddTempProduct({
     this.idNumber,
     this.note,
     this.uid,
     this.temp,
+    this.status,
   });
 }

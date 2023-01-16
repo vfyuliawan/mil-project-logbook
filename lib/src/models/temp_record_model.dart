@@ -9,6 +9,7 @@ class TempRecordingModel {
   final String? note;
   final String? uid;
   final double? temp;
+  final String? status;
   TempRecordingModel({
     this.id,
     this.dateTime,
@@ -16,6 +17,7 @@ class TempRecordingModel {
     this.note,
     this.uid,
     this.temp,
+    this.status,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class TempRecordingModel {
       'note': note,
       'uid': uid,
       'temp': temp,
+      'status': status,
     };
   }
 
@@ -39,6 +42,7 @@ class TempRecordingModel {
       note: map['note'] != null ? map['note'] as String : null,
       uid: map['uid'] != null ? map['uid'] as String : null,
       temp: map['temp'] != null ? map['temp'] as double : null,
+      status: map['status'] != null ? map['status'] as String : null,
     );
   }
 

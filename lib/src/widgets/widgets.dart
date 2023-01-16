@@ -4,3 +4,4 @@ import 'package:logbook_digitalization/src/utilities/utilities.dart';
 
 part 'textfield_widget.dart';
 part 'button_widget.dart';
+part 'switch_widget.dart';
