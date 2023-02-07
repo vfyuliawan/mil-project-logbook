@@ -10,3 +10,4 @@ export 'list_cart/list_cart_bloc.dart';
 export 'order/order_bloc.dart';
 export 'list_order/list_order_bloc.dart';
 export 'temp_record/temp_record_bloc.dart';
+export 'list_suhu/list_suhu_bloc.dart';

@@ -10,7 +10,7 @@ class TempRecordService {
       TempRecordingModel data) async {
     try {
       tempRecordCollection.doc(data.id).set(data.toMap());
-      return right('Berhasil Menambahkan Produk');
+      return right('Data Berhasil di Input');
     } catch (e) {
       return left(e.toString());
     }

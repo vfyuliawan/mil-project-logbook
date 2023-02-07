@@ -15,11 +15,11 @@ class _HomeScreenState extends State<HomeScreen> {
       label: 'Beranda',
       activeIcon: Icon(Icons.home),
     ),
-    // BottomNavigationBarItem(
-    //   icon: Icon(Icons.favorite_outline_rounded),
-    //   label: 'Wishlist',
-    //   activeIcon: Icon(Icons.favorite),
-    // ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.favorite_outline_rounded),
+      label: 'Data Suhu',
+      activeIcon: Icon(Icons.thermostat),
+    ),
     BottomNavigationBarItem(
       icon: Icon(Icons.person_outline_rounded),
       label: 'Profil',
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   // final pageItems = const [DashboardView(), WishlistView(), UserView()];
-  final pageItems = const [DashboardView(), UserView()];
+  final pageItems = const [DashboardView(), UserView(), ProductView()];
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       .add(FetchListWishlist());
                 }
                 if (value == 2) {
+                  BlocProvider.of<ListOrderBloc>(context).add(FetchListOrder());
+                }
+                if (value == 3) {
                   BlocProvider.of<ListOrderBloc>(context).add(FetchListOrder());
                 }
               },

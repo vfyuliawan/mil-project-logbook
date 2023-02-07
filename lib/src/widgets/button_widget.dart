@@ -17,11 +17,12 @@ class ButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading! ? null : onPressed,
       style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          elevation: 0.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          )),
+        backgroundColor: color,
+        elevation: 0.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
       child: isLoading!
           ? SizedBox(
               height: 16,

@@ -30,6 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^4.0.3
+  awesome_snackbar_content: ^0.1.0
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
   firebase_auth: ^4.1.0
@@ -76,6 +77,8 @@ flutter:
     - assets/images/background.jpg
     - assets/images/background-home.jpg
     - assets/images/mil_logo.png
+    - assets/images/loginscreen.jpg
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

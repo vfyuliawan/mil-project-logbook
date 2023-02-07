@@ -12,10 +12,12 @@ import 'package:logbook_digitalization/src/models/models.dart';
 import 'package:logbook_digitalization/src/utilities/utilities.dart';
 import 'package:logbook_digitalization/src/widgets/widgets.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:http/http.dart' as http;
 
 // import 'package:qrscan/qrscan.dart' as scanner;
 
 part 'splash_screen.dart';
+part 'home/views/forgetpass_view.dart';
 part 'register_screen.dart';
 part 'login_screen.dart';
 part 'home/home_screen.dart';
@@ -25,3 +27,5 @@ part 'home/views/user_view.dart';
 part 'admin_screen.dart';
 part 'detail_screen.dart';
 part 'cart_screen.dart';
+part 'home/views/forgotpassword_view.dart';
+part 'home/views/list_product_view.dart';

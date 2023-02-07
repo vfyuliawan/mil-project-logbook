@@ -12,3 +12,4 @@ part 'admin_service.dart';
 part 'product_service.dart';
 part 'order_service.dart';
 part 'temp_record_service.dart';
+part 'temp_service.dart';
